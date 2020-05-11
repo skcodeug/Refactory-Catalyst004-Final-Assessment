@@ -63,16 +63,15 @@ formValidation = () => {
         // Pause form execution if all fields are not validated in the object literal above
         event.preventDefault();
     } else {
-        // On success auto generate username and relay it to Admin then resume execution
+        // On success alert User then resume execution
         alert("You have successfully completed validation");
-        // console.log(generated_username)
         event.currentTarget.submit();
         return true;
     }
-    
     return true;
 }
 
+// VALIDATION FUNCTIONS BELOW
 surName_validation = (surName, min, max) => {
     var letters = /^[A-Za-z]+$/;
     if(surName.value.length <= min || surName.value.length >= max || !surName.value.match(letters)){
@@ -106,14 +105,15 @@ dob_validation = (dob, min, max) => {
         document.getElementById('dob-error').style.display = "block";
         return 0
     } else {
-        const min_age_of_adult = min;
-        const max_age_of_adult = max;
+        var min_age_of_adult = min;
+        var max_age_of_adult = max;
         var dob_value = dob.value;
         var patient_dob = new Date(dob_value).getTime();
         var date_today = new Date();
         var date_1yr_ago = date_today.setFullYear(date_today.getFullYear() - min_age_of_adult);
+        var date_150yr_ago = date_today.setFullYear(date_today.getFullYear() - max_age_of_adult);
 
-        if(patient_dob < date_1yr_ago) {
+        if(patient_dob < date_1yr_ago && patient_dob > date_150yr_ago) {
             dob.style.border = "2px solid green"
             return 1;
         } else {
